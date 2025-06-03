@@ -35,35 +35,79 @@ def recognize():
 
 # ========================================輸出========================================
 keyboard = Controller()
-def attack(seconds):
+def attack(sec):
     """
-    模擬攻擊
+    雙飛斬
     """
-    print("執行 attack 函數：模擬攻擊")
-    # 放雙飛閃
+    print("雙飛斬")
+    # 放雙飛斬
     keyboard.press('z')
-    time.sleep(seconds)
+    time.sleep(sec)
     keyboard.release('z')
+    # 等待後搖
+    time.sleep(1)
+
+def attackSpeed():
+    """
+    急速暗殺
+    """
+    print("急速暗殺")
+    # 放攻擊速度
+    keyboard.press('c')
+    time.sleep(0.1)
+    keyboard.release('c')
+    # 等待後搖
+    time.sleep(0.5)
 
 def speed():
     """
-    模擬加速
+    速度激發
     """
-    print("執行 speed 函數：模擬加速")
+    print("速度激發")
     # 放速度激發
     keyboard.press('x')
-    time.sleep(0.5)
+    time.sleep(0.1)
     keyboard.release('x')
+    # 等待後搖
+    time.sleep(0.5)
 
 def hide():
     """
-    模擬隱身術
+    隱身術
     """
-    print("執行 hide 函數：模擬隱身術")
+    print("隱身術")
+    # 平a取消隱身術
+    keyboard.press(Key.ctrl)
+    keyboard.release(Key.ctrl)
+    # 等待後搖
+    time.sleep(0.5)
+
     # 放隱身術
     keyboard.press('a')
-    time.sleep(0.5)
+    time.sleep(0.1)
     keyboard.release('a')
+    # 等待後搖
+    time.sleep(0.5)
+
+def moveLeft(sec):
+    """
+    向左移動
+    """
+    print("向左移動")
+    # 放向左鍵
+    keyboard.press(Key.left)
+    time.sleep(sec)
+    keyboard.release(Key.left)
+
+def moveRight(sec):
+    """
+    向右移動
+    """
+    print("向右移動")
+    # 放向右鍵
+    keyboard.press(Key.right)
+    time.sleep(sec)
+    keyboard.release(Key.right)
 
 def restore():
     """
@@ -72,47 +116,13 @@ def restore():
     print("執行 restore 函數：角色回到原始位置")
     # 放速度激發
     speed()
-    time.sleep(0.1)
     # 放隱身術
     hide()
     # 走到右底
-    keyboard.press(Key.right)
-    time.sleep(10)
-    keyboard.release(Key.right)
+    moveRight(15)
     # 轉向左面
-    keyboard.press(Key.left)
-    # time.sleep(0.1)
-    keyboard.release(Key.left)
+    moveLeft(0.1)
 
-def climeb():
-    """
-    模擬爬牆
-    """
-    print("執行 climb 函數：模擬爬牆")
-    # 放爬牆鍵
-    keyboard.press(Key.space)
-    keyboard.press(Key.up)
-    time.sleep(2)
-    keyboard.release(Key.space)
-    keyboard.release(Key.up)
-
-def step1row():
-    """
-    模擬走到第一排
-    """
-    print("執行 step1row 函數：模擬走到第一排")
-    # 放速度激發
-    speed()
-    time.sleep(0.1)
-    # 放隱身術
-    hide()
-    keyboard.press(Key.left)
-    time.sleep(5.4)
-    keyboard.release(Key.left)
-    # 轉向右面
-    keyboard.press(Key.right)
-    time.sleep(0.1)
-    keyboard.release(Key.right)
 # ========================================測試========================================
 
 if __name__ == "__main__":
@@ -120,10 +130,21 @@ if __name__ == "__main__":
         print(f"程式將在 {2 - i} 秒後啟動...")
         time.sleep(1)
 
-    for i in range(3):
-        restore()
-        attack(10)
-        step1row()
-        climeb()
-        attack(10)
-        restore()
+    direction = "left"
+    while True:
+        speed()
+        for _ in range(4):  # 每個方向執行重複的攻擊和移動
+            attackSpeed()
+            attack(8)
+            if direction == "left":
+                moveLeft(2)
+            elif direction == "right":
+                moveRight(2)
+        if direction == "left":
+            # 轉向右面之後，接續右方向的動作
+            moveRight(0.1)
+            direction = "right"
+        elif direction == "right":
+            # 轉向左面之後，接續左方向的動作
+            moveLeft(0.1)
+            direction = "left"
