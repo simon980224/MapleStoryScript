@@ -23,7 +23,7 @@ def process(image):
 
 def recognize():
     """
-    1. 捕捉螢幕畫面，2. 圖像處理 ，3. 模擬 z 鍵按下
+    1. 捕捉螢幕畫面，2. 圖像處理
     """
     # 1. 使用 pyautogui 捕捉螢幕畫面
     screenshot = pyautogui.screenshot()
@@ -131,9 +131,10 @@ if __name__ == "__main__":
         time.sleep(1)
 
     direction = "left"
+    # direction  = "right"
     while True:
         speed()
-        for _ in range(4):  # 每個方向執行重複的攻擊和移動
+        for _ in range(3):  # 每個方向執行重複的攻擊和移動
             attackSpeed()
             attack(8)
             if direction == "left":
