@@ -134,8 +134,9 @@ if __name__ == "__main__":
     # direction  = "right"
     while True:
         speed()
+        time.sleep(0.5)
+        attackSpeed()
         for _ in range(3):  # 每個方向執行重複的攻擊和移動
-            attackSpeed()
             attack(8)
             if direction == "left":
                 moveLeft(2)
